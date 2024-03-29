@@ -1,25 +1,6 @@
 <div class="container-fluid mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-      <h1>{{ 'task summary' | uppercase }}</h1>
-      <div>
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-      </div>
-
-      <form class="d-flex justify-content-center mt-4" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
+  
+  
 
   <div class="row mt-5">
     <h1 class="text-center">Tasks of the day</h1>
@@ -33,18 +14,25 @@
           'border-danger': !task.completed
         }"
       >
-      <div class="card-body d-flex align-items-center">
+      <div class="card-body d-flex align-items-center border border-5">
         <div class="ms-3">
-          <h3 class="card-text">{{ task.todo }}</h3>
+          <h3 class="card-text fs-4" style="height: 130px; border-bottom: 2px solid black;">{{ task.todo }}</h3>
+
           <div *ngFor="let user of users">
-            <h5 class="card-title" *ngIf="user.id === task.userId">
-              Task for: {{ user.firstName }} {{ user.lastName }}
-            </h5>
+            <div class="card-title row align-items-center justify-content-start align-items-center" *ngIf="user.id === task.userId">
+              <p>Task for:</p>
+              <p class="fw-bold fs-7 col-auto">{{ user.firstName }} {{ user.lastName }}</p>
+              <img src="{{ user.image }}" alt="" class="card-img rounded-circle col-auto" style="width: 60px;">
+            </div>
           </div>
-          <a href="#" class="btn btn-outline-primary border-2 mt-2">Vai all'attività</a>
-          <button class="btn btn-outline-danger border-2 mt-2" (click)="deleteTask(task)">Elimina</button>
+          
+          
+          <div class="mt-4">
+            <button class="btn btn-outline-primary border- mt-2">Vai all'attività</button>
+            <button class="btn btn-outline-danger border-2 mt-2 ms-3" (click)="deleteTask(task)">Elimina</button>
+          </div>
           <div>
-            <p class="card-text mt-5">Completed: <input type="checkbox" [(ngModel)]="task.completed" /></p>
+            <p class="card-text mt-3">Completed: <input type="checkbox" [(ngModel)]="task.completed" /></p>
           </div>
         </div>
       </div>
@@ -53,3 +41,4 @@
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>

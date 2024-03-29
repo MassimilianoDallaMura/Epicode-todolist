@@ -22,4 +22,7 @@ ngOnInit(): void {
   console.log(this.users);
   
 }
+isAllTasksCompleted(user: any): boolean {
+  return this.tasks.filter(task => task.userId === user.id && !task.completed).length === 0;
+}
 }

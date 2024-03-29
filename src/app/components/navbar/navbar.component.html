@@ -1,0 +1,58 @@
+<div class="row justify-content-center sticky-top m-0">
+  <div class="col-md-6 text-center">
+    <h1>{{ "task summary" | uppercase }}</h1>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100 justify-content-around">
+              <li class="nav-item flex-fill">
+                <a
+                  class="nav-link border border-2 bg-info"
+                  [routerLink]="['']"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  >All we have to do</a
+                >
+              </li>
+              <li class="nav-item flex-fill">
+                <a
+                  class="nav-link border border-2 bg-success ms-3"
+                  [routerLink]="['/done']"
+                  routerLinkActive="active"
+                  >Well done!</a
+                >
+              </li>
+              <li class="nav-item flex-fill">
+                <a
+                  class="nav-link border border-2 bg-danger ms-3"
+                  [routerLink]="['/undone']"
+                  routerLinkActive="active"
+                  >Still to do</a
+                >
+              </li>
+              <li class="nav-item flex-fill">
+                <a
+                  class="nav-link border border-2 bg-primary ms-3"
+                  [routerLink]="['/users']"
+                  routerLinkActive="active"
+                  >By user</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+
+    <form class="d-flex justify-content-center mt-4" role="search">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</div>

@@ -1,22 +1,22 @@
 <div class="row mt-5">
-    <h1 class="text-center">Users</h1>
-    <div class="col d-flex flex-wrap">
-      <div class="card m-3" style="width: 18rem" *ngFor="let user of users">
-        <div class="card-body d-flex align-items-center flex-column">
-          <img [src]="user.image" alt="User Photo" class="rounded-circle mb-3" style="width: 100px; height: 100px;">
-          <div class="ms-3">
-            <h3 class="card-text">{{ user.firstName }} {{ user.lastName }}</h3>
-            <div *ngFor="let task of tasks">
-                <h5 class="card-title" *ngIf="user.id === task.userId"
-                    [ngStyle]="{'background-color': task.completed ? 'green' : 'red'}">
-                    Task: {{ task.todo }}
-                    Completed? <input type="checkbox" [(ngModel)]="task.completed" />
-                </h5>
-            </div>
-            <a href="#" class="btn btn-outline-primary border-2 mt-2">Vai all'attività</a>
+  <h1 class="text-center">Users</h1>
+  <div class="col d-flex flex-wrap">
+    <div class="card m-3" style="width: 18rem" *ngFor="let user of users" [ngClass]="{'border-success': isAllTasksCompleted(user)}">
+
+      <div class="card-body d-flex align-items-center flex-column">
+        <img [src]="user.image" alt="User Photo" class="rounded-circle mb-3 user-photo" style="width: 100px; height: 100px;">
+        <div class="ms-3">
+          <h3 class="card-text">{{ user.firstName }} {{ user.lastName }}</h3>
+          <div *ngFor="let task of tasks">
+              <h5 class="card-title" *ngIf="user.id === task.userId"
+                  [ngStyle]="{'background-color': task.completed ? 'green' : 'red'}">
+                  <input type="checkbox" [(ngModel)]="task.completed" />
+                   <p>{{ task.todo }}</p>
+              </h5>
           </div>
+          <a href="#" class="btn btn-outline-primary border-2 mt-2">Vai all'utente</a>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
