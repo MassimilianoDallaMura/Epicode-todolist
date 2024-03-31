@@ -30,8 +30,8 @@ export class DoneComponent {
   }
 
   async moveTask(task: Todo): Promise<void> {
-    await this.todoSrv.moveTask(task, false); // Utilizzo di await per aspettare il completamento dell'azione del servizio
-    this.deleteTask(task);
+    await this.todoSrv.moveTask(task, false); // Utilizzo di await per aspettare il completamento dell'azione del servizio e cambiare lo stato
+    this.deleteTask(task); 
   }
   
 }

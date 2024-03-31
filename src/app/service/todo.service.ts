@@ -922,28 +922,40 @@ export class TodoService {
 moveTask(task: Todo, completed: boolean) {
   const index = this.tasks.findIndex((todo) => todo.id === task.id);
   if (index !== -1) {
-    this.tasks[index].completed = completed; // Aggiorna lo stato del completamento nel task principale
+    this.tasks[index].completed = completed;
 
-    // Rimuovi il task dagli array completati o non completati
-    const completedIndex = this.completedTasks.findIndex((t) => t.id === task.id);
-    const uncompletedIndex = this.uncompletedTasks.findIndex((t) => t.id === task.id);
-    if (completed && completedIndex === -1) {
+    // Aggiungi o rimuovi il task dall'array corretto
+    if (completed) {
       this.completedTasks.push(this.tasks[index]);
+      const uncompletedIndex = this.uncompletedTasks.findIndex((t) => t.id === task.id);
       if (uncompletedIndex !== -1) {
         this.uncompletedTasks.splice(uncompletedIndex, 1);
       }
-    } else if (!completed && uncompletedIndex === -1) {
+    } else {
       this.uncompletedTasks.push(this.tasks[index]);
+      const completedIndex = this.completedTasks.findIndex((t) => t.id === task.id);
       if (completedIndex !== -1) {
         this.completedTasks.splice(completedIndex, 1);
       }
     }
+  }
+}
 
-    // Rimuovi il task dall'array completedTasks se è stato spostato
-    if (completed) {
+deleteTask(task: Todo) {
+  const index = this.tasks.findIndex((todo) => todo.id === task.id);
+  if (index !== -1) {
+    // Rimuovi il task dall'array principale
+    this.tasks.splice(index, 1);
+
+    // Rimuovi il task dall'array completato o non completato
+    const completedIndex = this.completedTasks.findIndex((t) => t.id === task.id);
+    if (completedIndex !== -1) {
       this.completedTasks.splice(completedIndex, 1);
-    } else if (!completed) {
-      this.uncompletedTasks.splice(uncompletedIndex, 1);
+    } else {
+      const uncompletedIndex = this.uncompletedTasks.findIndex((t) => t.id === task.id);
+      if (uncompletedIndex !== -1) {
+        this.uncompletedTasks.splice(uncompletedIndex, 1);
+      }
     }
   }
 }
