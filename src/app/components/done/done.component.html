@@ -9,8 +9,14 @@
       }">
         <div class="card-body d-flex align-items-center border border-2 ">
           <div class="ms-3">
+              <button
+                class="btn btn-outline-danger btn-sm border-2 mt-2 ms-3"
+                (click)="deleteTask(task)"
+              >
+                ❌
+              </button>
             <h3
-              class="card-text fs-4"
+              class="card-text fs-4 mt-3"
               style="height: 130px; border-bottom: 2px solid black"
             >
               {{ task.todo }}
@@ -39,11 +45,13 @@
                 Vai all'attività
               </button>
               <button
-                class="btn btn-outline-danger border-2 mt-2 ms-3"
-                (click)="deleteTask(task)"
-              >
-                Elimina
-              </button>
+              class="btn btn-outline-success border-2 mt-2 ms-3"
+              *ngIf="!task.completed"
+              (click)="moveTask(task)"
+            >
+              Sposta
+            </button>
+             
             </div>
             <div>
               <p class="card-text mt-3">

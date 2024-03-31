@@ -5,6 +5,10 @@ import { Todo } from '../models/todo.interface';
   providedIn: 'root'
 })
 export class TodoService {
+  completedTasks: Todo[] = [];
+  uncompletedTasks: Todo[] = [];
+
+
 
   tasks: Todo[] = [
     {
@@ -16,7 +20,7 @@ export class TodoService {
     {
       "id": 2,
       "todo": "Memorize the fifty states and their capitals",
-      "completed": false,
+      "completed": true,
       "userId": 48
     },
     {
@@ -28,7 +32,7 @@ export class TodoService {
     {
       "id": 4,
       "todo": "Contribute code or a monetary donation to an open-source software project",
-      "completed": false,
+      "completed": true,
       "userId": 48
     },
     {
@@ -58,7 +62,7 @@ export class TodoService {
     {
       "id": 9,
       "todo": "Invite some friends over for a game night",
-      "completed": false,
+      "completed": true,
       "userId": 47
     },
     {
@@ -913,5 +917,34 @@ export class TodoService {
 
   getTasks() {
   return this.tasks;
+}
+
+moveTask(task: Todo, completed: boolean) {
+  const index = this.tasks.findIndex((todo) => todo.id === task.id);
+  if (index !== -1) {
+    this.tasks[index].completed = completed; // Aggiorna lo stato del completamento nel task principale
+
+    // Rimuovi il task dagli array completati o non completati
+    const completedIndex = this.completedTasks.findIndex((t) => t.id === task.id);
+    const uncompletedIndex = this.uncompletedTasks.findIndex((t) => t.id === task.id);
+    if (completed && completedIndex === -1) {
+      this.completedTasks.push(this.tasks[index]);
+      if (uncompletedIndex !== -1) {
+        this.uncompletedTasks.splice(uncompletedIndex, 1);
+      }
+    } else if (!completed && uncompletedIndex === -1) {
+      this.uncompletedTasks.push(this.tasks[index]);
+      if (completedIndex !== -1) {
+        this.completedTasks.splice(completedIndex, 1);
+      }
+    }
+
+    // Rimuovi il task dall'array completedTasks se è stato spostato
+    if (completed) {
+      this.completedTasks.splice(completedIndex, 1);
+    } else if (!completed) {
+      this.uncompletedTasks.splice(uncompletedIndex, 1);
+    }
+  }
 }
 }

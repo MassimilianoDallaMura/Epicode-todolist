@@ -4,11 +4,10 @@ import { User } from 'src/app/models/user.interface';
 import { TodoService } from 'src/app/service/todo.service';
 import { UsersService } from 'src/app/service/users.service';
 
-
 @Component({
   selector: 'app-done',
   templateUrl: './done.component.html',
-  styleUrls: ['./done.component.scss']
+  styleUrls: ['./done.component.scss'],
 })
 export class DoneComponent {
   tasks!: Todo[];
@@ -20,17 +19,19 @@ export class DoneComponent {
   ngOnInit(): void {
     this.tasks = this.todoSrv.getTasks();
     this.users = this.usersSrv.getUsers();
-    this.completedTasks = this.tasks.filter(task => task.completed);
-    console.log(this.tasks);
-    console.log(this.users);
-    console.log(this.completedTasks);
+    this.completedTasks = this.tasks.filter((task) => task.completed);
   }
 
   deleteTask(task: Todo): void {
-    // Rimuovi il task dall'array tasks
-    const index = this.tasks.indexOf(task);
+    const index = this.completedTasks.indexOf(task);
     if (index !== -1) {
-      this.tasks.splice(index, 1);
+      this.completedTasks.splice(index, 1);
     }
   }
+
+  async moveTask(task: Todo): Promise<void> {
+    await this.todoSrv.moveTask(task, false); // Utilizzo di await per aspettare il completamento dell'azione del servizio
+    this.deleteTask(task);
+  }
+  
 }

@@ -12,26 +12,27 @@ import { UsersService } from 'src/app/service/users.service';
 export class UndoneComponent {
   tasks!: Todo[];
   users!: User[];
-  uncompletedTasks: Todo[] = []; // Array per i task completati
+  uncompletedTasks: Todo[] = [];
 
   constructor(private todoSrv: TodoService, private usersSrv: UsersService) {}
 
   ngOnInit(): void {
     this.tasks = this.todoSrv.getTasks();
     this.users = this.usersSrv.getUsers();
-    this.uncompletedTasks = this.tasks.filter(task => !task.completed);
-    console.log(this.tasks);
-    console.log(this.users);
-    console.log(this.uncompletedTasks);
+    this.uncompletedTasks = this.tasks.filter((task) => !task.completed);
   }
 
   deleteTask(task: Todo): void {
-    // Rimuovi il task dall'array tasks
-    const index = this.tasks.indexOf(task);
+    const index = this.uncompletedTasks.indexOf(task);
     if (index !== -1) {
-      this.tasks.splice(index, 1);
+      this.uncompletedTasks.splice(index, 1);
     }
   }
-}
 
+  moveTask(task: Todo): void {
+    this.todoSrv.moveTask(task, true); // Imposta il task come completato
+    this.deleteTask(task); // Rimuovi il task dalla lista dei compiuti
+  }
+  
+}
 
