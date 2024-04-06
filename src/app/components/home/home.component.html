@@ -3,8 +3,9 @@
   <div class="row mt-3 justify-content-center">
     <div class="flex-wrap">
       <div
-        class="card p-3 m-3 flex-fill"
+        class="card p-3 m-3 flex-fill" 
         *ngFor="let task of tasks"
+      
         [ngClass]="{
           'border-success': task.completed,
           'border-danger': !task.completed
