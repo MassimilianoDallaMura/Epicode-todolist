@@ -8,15 +8,17 @@
         <div class="ms-3">
           <h3 class="card-text">{{ user.firstName }} {{ user.lastName }}</h3>
           <div *ngFor="let task of tasks">
-              <h5 class="card-title" *ngIf="user.id === task.userId"
-                  [ngStyle]="{'background-color': task.completed ? 'green' : 'red'}">
-                  <input type="checkbox" [(ngModel)]="task.completed" />
-                   <p>{{ task.todo }}</p>
-              </h5>
+            <div class="d-flex justify-content-between align-items-center" *ngIf="user.id === task.userId">
+              <div class="d-flex align-items-center">
+                <input type="checkbox" [(ngModel)]="task.completed" class="me-2" />
+                <p class="mb-0">{{ task.todo }}</p>
+              </div>
+            </div>
           </div>
           <a href="#" class="btn btn-outline-primary border-2 mt-2">Vai all'utente</a>
         </div>
       </div>
+      
     </div>
   </div>
 </div>
