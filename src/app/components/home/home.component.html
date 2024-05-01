@@ -5,7 +5,6 @@
       <div
         class="card p-3 m-3 flex-fill" 
         *ngFor="let task of tasks"
-      
         [ngClass]="{
           'border-success': task.completed,
           'border-danger': !task.completed
@@ -24,16 +23,19 @@
                 <p class="mt-4">Task for:</p>
                 <p class="fw-bold fs-7">
                   {{ user.firstName }} {{ user.lastName }}
+                  
                 </p>
+        
               </div>
             </div>
           </div>
 
           <div class="col-5 d-flex align-items-center justify-content-around">
             <div>
-              <button class="btn btn-outline-primary border-2 btn-lg ms-3">
-                Vai all'attività
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openModal(task.id)">
+                Modifica attività
               </button>
+          
               <button
                 class="btn btn-outline-danger border-2 btn-lg ms-3"
                 (click)="deleteTask(task)"
@@ -56,4 +58,43 @@
 </div>
 
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center align-items-center">
+        <h1 class="modal-title fs-5 me-3" id="exampleModalLabel">Task di</h1>
+        <ng-container *ngIf="selectedTask">
+          <select class="form-select" [(ngModel)]="editedTask.userId">
+            <option *ngFor="let task of tasks" [value]="task.id">{{ getTaskAuthor(task.id) }}</option>
+          </select>
+        </ng-container>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="selectedTask">
+          <input type="text" class="form-control" [(ngModel)]="editedTask.todo">
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <!-- Pulsanti di chiusura e salvataggio -->
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">Salva modifiche</button>
+      </div>
+      
+      <!-- Messaggio di salvataggio -->
+      <div *ngIf="savedMessageVisible" class="alert alert-success" role="alert">
+        Mofiche avvenute con successo
+        <button type="button" class="btn-close" aria-label="Close" (click)="hideSavedMessage()"></button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
 <router-outlet></router-outlet>
+
+
+
+<!--<option *ngFor="let task of tasks" [value]="task.id">{{ getTaskAuthor(task.id) }}</option>--> 

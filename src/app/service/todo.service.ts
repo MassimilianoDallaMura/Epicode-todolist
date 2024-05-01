@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../models/todo.interface';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -957,6 +959,27 @@ deleteTask(task: Todo) {
         this.uncompletedTasks.splice(uncompletedIndex, 1);
       }
     }
+  }
+}
+
+updateTask(updatedTask: Todo) {
+  const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
+  if (index !== -1) {
+    // Aggiorna il task nell'array principale
+    this.tasks[index] = updatedTask;
+
+    // Aggiorna il task nell'array completato o non completato
+    const completedIndex = this.completedTasks.findIndex((t) => t.id === updatedTask.id);
+    if (completedIndex !== -1) {
+      this.completedTasks[completedIndex] = updatedTask;
+    } else {
+      const uncompletedIndex = this.uncompletedTasks.findIndex((t) => t.id === updatedTask.id);
+      if (uncompletedIndex !== -1) {
+        this.uncompletedTasks[uncompletedIndex] = updatedTask;
+      }
+    }
+
+    
   }
 }
 }
